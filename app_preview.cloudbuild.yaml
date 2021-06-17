@@ -34,4 +34,4 @@ steps:
     - '-c'
     - |
       gh auth login --with-token < /workspace/token.txt
-      pr comment $_PR_NUMBER "Preview this change at https://$SHORT_SHA---us-covid-stats-syyjbfrpfq-ue.a.run.app"
+      gh pr comment $_PR_NUMBER --body="Preview this change at https://$SHORT_SHA---us-covid-stats-syyjbfrpfq-ue.a.run.app"
