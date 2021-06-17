@@ -1,11 +1,11 @@
-resource "google_cloud_run_service" "covid_stats" {
-  name     = "covid-stats"
+resource "google_cloud_run_service" "us-covid_stats" {
+  name     = "us-covid-stats"
   location = var.google_region
 
   template {
     spec {
       containers {
-        image = "gcr.io/${var.google_project_id}/covid-stats"
+        image = "gcr.io/${var.google_project_id}/us-covid-stats"
         env {
             name = "CUSTOM_VAR"
             value = "foo"
@@ -25,7 +25,7 @@ resource "google_cloud_run_service" "covid_stats" {
 resource "google_cloud_run_service_iam_binding" "noauth" {
   location = var.google_region
   project  = var.google_project_id
-  service  = "covid-stats"
+  service  = "us-covid-stats"
 
   role       = "roles/run.invoker"
   members    = ["allUsers"]
