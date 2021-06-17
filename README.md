@@ -1,6 +1,6 @@
 # us-covid-stats
 
-Web dashboard app that presents COVID-19 infection and death counts by U.S. county, search interface via ZipCode. Written in Python using Flask, javascript, bootstrap CSS.
+Web dashboard app that presents COVID-19 infection and death counts by U.S. county, search interface via ZipCode. Written in Python using Flask, javascript, bootstrap CSS. 
 
 Uses the [Mulesoft COVID-19 APIs](https://www.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/covid19-data-tracking-api/). Note there are some known problems with this API at time of writing. For instance, it returns no data for zipcodes in NYC (e.g. 10001, 10005).
 
