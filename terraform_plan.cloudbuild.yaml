@@ -20,10 +20,18 @@ steps:
       -var=google_project_id=$PROJECT_ID \
       -var=google_region=us-east1 \
       -out=tfplan
+      
       # write changes (sans color codes) to a file
-      echo "Terraform changes from this PR:" > /workspace/tfchanges
-      echo "-------------------------------" >> /workspace/tfchanges
       terraform show tfplan | sed 's/\x1b\[[0-9;]*m//g' >> /workspace/tfchanges
+
+      # ensure that the changes file was written (the above commands may fail without error)
+      if [[ ! -s /workspace/tfchanges ]]; then
+        exit 1
+      fi
+
+      # add a header to the changes file
+      echo -e "Terraform changes from this PR:\n-------------------------------\n$(cat /workspace/tfchanges)" > /workspace/tfchanges
+
   waitFor: ['terraform init']
 # - name: gcr.io/cloud-builders/gcloud
 #   id: fetch gh token
