@@ -18,7 +18,7 @@ steps:
     '--region', 'us-east1',
     '--platform', 'managed',
     '--allow-unauthenticated',
-    '--tag=$SHORT_SHA',
+    '--tag=commit-$SHORT_SHA',
     '--no-traffic',
     '--quiet'
   ]
@@ -34,4 +34,4 @@ steps:
     - '-c'
     - |
       gh auth login --with-token < /workspace/token.txt
-      gh pr comment $_PR_NUMBER --body="Preview this change at https://$SHORT_SHA---us-covid-stats-syyjbfrpfq-ue.a.run.app"
+      gh pr comment $_PR_NUMBER --body="Preview this change at https://commit-$SHORT_SHA---us-covid-stats-syyjbfrpfq-ue.a.run.app"
