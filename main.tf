@@ -1,4 +1,4 @@
-resource "google_cloud_run_service" "us-covid_stats" {
+resource "google_cloud_run_service" "us_covid_stats" {
   name     = "us-covid-stats"
   location = var.google_region
 
