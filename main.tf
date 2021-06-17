@@ -6,11 +6,13 @@ resource "google_cloud_run_service" "us_covid_stats" {
     spec {
       containers {
         image = "gcr.io/${var.google_project_id}/us-covid-stats"
-        env {
-            name = "CUSTOM_VAR"
-            value = "foo"
-        }
       }
+    }
+  }
+
+  metadata {
+    labels = {
+      "foo" : "bar"
     }
   }
 
