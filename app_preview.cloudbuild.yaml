@@ -15,7 +15,7 @@ steps:
   args: [
     'run', 'deploy', 'covid-stats',
     '--image=gcr.io/$PROJECT_ID/us-covid-stats:$SHORT_SHA',
-    '--region', 'us-central1',
+    '--region', 'us-east1',
     '--platform', 'managed',
     '--allow-unauthenticated',
     '--tag=commit$SHORT_SHA',
