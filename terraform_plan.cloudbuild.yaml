@@ -33,11 +33,6 @@ steps:
       echo -e "Terraform changes from this PR:\n-------------------------------\n$(cat /workspace/tfchanges)" > /workspace/tfchanges
 
   waitFor: ['terraform init']
-# - name: gcr.io/cloud-builders/gcloud
-#   id: fetch gh token
-#   entrypoint: 'bash'
-#   args: [ '-c', "gcloud secrets versions access latest --secret=github_token --format='get(payload.data)' | tr '_-' '/+' | base64 -d > /workspace/token.txt" ]
-#   waitFor: ['-']
 - name: 'gcr.io/$PROJECT_ID/github'
   id: publish plan
   entrypoint: 'bash'
