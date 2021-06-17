@@ -12,7 +12,7 @@ resource "google_cloud_run_service" "us_covid_stats" {
 
   metadata {
     labels = {
-      "foo" : "pony"
+      "foo" : "yext"
     }
   }
 
