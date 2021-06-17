@@ -38,6 +38,7 @@ steps:
     - |
       gh auth login --with-token <<< "$$GH_TOKEN"
       gh pr comment $_PR_NUMBER --body-file="/workspace/tfchanges"
+  secretEnv: ['GH_TOKEN']
   waitFor: ['terraform plan']
   
 availableSecrets:
