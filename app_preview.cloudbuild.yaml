@@ -13,7 +13,7 @@ steps:
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
   entrypoint: gcloud
   args: [
-    'run', 'deploy', 'covid-stats',
+    'run', 'deploy', 'us-covid-stats',
     '--image=gcr.io/$PROJECT_ID/us-covid-stats:$SHORT_SHA',
     '--region', 'us-east1',
     '--platform', 'managed',
