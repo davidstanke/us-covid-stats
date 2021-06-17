@@ -13,18 +13,24 @@ steps:
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
   entrypoint: gcloud
   args: [
-    'run', 'deploy', 'covid-stats',
+    'run', 'deploy', 'us-covid-stats',
     '--image=gcr.io/$PROJECT_ID/us-covid-stats:$SHORT_SHA',
-    '--region', 'us-central1',
+    '--region', 'us-east1',
     '--platform', 'managed',
     '--allow-unauthenticated',
-    '--tag=commit$SHORT_SHA',
+    '--tag=commit-$SHORT_SHA',
     '--no-traffic',
     '--quiet'
   ]
+# fetch gh token
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bash'
+  args: [ '-c', "gcloud secrets versions access latest --secret=github_token --format='get(payload.data)' | tr '_-' '/+' | base64 -d > /workspace/token.txt" ]
 # post preview link to PR
-- name: gcr.io/$PROJECT_ID/github
-  args: [
-    'pr', 'comment', '$_PR_NUMBER', '--body',
-    'Preview this change at https://$SHORT_SHA---us-covid-stats-syyjbfrpfq-ue.a.run.app'
-  ]
+- name: 'gcr.io/$PROJECT_ID/github'
+  entrypoint: 'bash'
+  args: 
+    - '-c'
+    - |
+      gh auth login --with-token < /workspace/token.txt
+      gh pr comment $_PR_NUMBER --body="Preview this change at https://commit-$SHORT_SHA---us-covid-stats-syyjbfrpfq-ue.a.run.app"
