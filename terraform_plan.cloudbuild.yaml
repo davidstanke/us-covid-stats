@@ -25,18 +25,22 @@ steps:
       echo "-------------------------------" >> /workspace/tfchanges
       terraform show tfplan | sed 's/\x1b\[[0-9;]*m//g' >> /workspace/tfchanges
   waitFor: ['terraform init']
-- name: gcr.io/cloud-builders/gcloud
-  id: fetch gh token
-  entrypoint: 'bash'
-  args: [ '-c', "gcloud secrets versions access latest --secret=github_token --format='get(payload.data)' | tr '_-' '/+' | base64 -d > /workspace/token.txt" ]
-  waitFor: ['-']
+# - name: gcr.io/cloud-builders/gcloud
+#   id: fetch gh token
+#   entrypoint: 'bash'
+#   args: [ '-c', "gcloud secrets versions access latest --secret=github_token --format='get(payload.data)' | tr '_-' '/+' | base64 -d > /workspace/token.txt" ]
+#   waitFor: ['-']
 - name: 'gcr.io/$PROJECT_ID/github'
   id: publish plan
   entrypoint: 'bash'
   args: 
     - '-c'
     - |
-      cat /workspace/tfchanges
-      gh auth login --with-token < /workspace/token.txt
+      gh auth login --with-token <<< "$$GH_TOKEN"
       gh pr comment $_PR_NUMBER --body-file="/workspace/tfchanges"
   waitFor: ['terraform plan']
+  
+availableSecrets:
+  secretManager:
+    - versionName: projects/62368363434/secrets/github_token/versions/latest
+      env: 'GH_TOKEN'
