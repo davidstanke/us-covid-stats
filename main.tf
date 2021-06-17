@@ -1,5 +1,5 @@
 resource "google_cloud_run_service" "covid_stats" {
-  name     = "covid-stats"
+  name     = "covid-stats-foo"
   location = var.google_region
 
   template {
