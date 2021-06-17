@@ -29,5 +29,5 @@ resource "google_cloud_run_service_iam_binding" "noauth" {
 
   role       = "roles/run.invoker"
   members    = ["allUsers"]
-  depends_on = [google_cloud_run_service.covid_stats]
+  depends_on = [google_cloud_run_service.us_covid_stats]
 }
