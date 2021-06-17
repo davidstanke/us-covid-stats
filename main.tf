@@ -1,9 +1,3 @@
-resource "null_resource" "app_container" {
-    provisioner "local-exec" {
-        command = "gcloud builds submit --tag=gcr.io/${var.google_project_id}/covid-stats"
-    }
-}
-
 resource "google_cloud_run_service" "covid_stats" {
   name     = "covid-stats"
   location = var.google_region
