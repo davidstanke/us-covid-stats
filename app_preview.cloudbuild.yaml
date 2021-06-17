@@ -22,9 +22,17 @@ steps:
     '--no-traffic',
     '--quiet'
   ]
+# fetch gh token
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bash'
+  args: [ '-c', "gcloud secrets versions access latest --secret=github_token --format='get(payload.data)' | tr '_-' '/+' | base64 -d > /workspace/token.txt" ]
 # post preview link to PR
-- name: gcr.io/$PROJECT_ID/github
-  args: [
-    'pr', 'comment', '$_PR_NUMBER', '--body',
-    'Preview this change at https://$SHORT_SHA---us-covid-stats-syyjbfrpfq-ue.a.run.app'
-  ]
+- name: 'gcr.io/$PROJECT_ID/github'
+  id: publish plan
+  entrypoint: 'bash'
+  args: 
+    - '-c'
+    - |
+      gh auth login --with-token < /workspace/token.txt
+      pr comment $_PR_NUMBER --body \
+        'Preview this change at https://$SHORT_SHA---us-covid-stats-syyjbfrpfq-ue.a.run.app'
