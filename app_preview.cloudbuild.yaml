@@ -28,7 +28,6 @@ steps:
   args: [ '-c', "gcloud secrets versions access latest --secret=github_token --format='get(payload.data)' | tr '_-' '/+' | base64 -d > /workspace/token.txt" ]
 # post preview link to PR
 - name: 'gcr.io/$PROJECT_ID/github'
-  id: publish plan
   entrypoint: 'bash'
   args: 
     - '-c'
